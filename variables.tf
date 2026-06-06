@@ -21,3 +21,27 @@ variable "k8s_version" {
   type        = string
   default     = "1.35"
 }
+
+variable "instance_type" {
+  description = "EC2 instance type for worker nodes"
+  type        = string
+  default     = "t3.small"
+}
+
+variable "min_nodes" {
+  description = "Minimum number of worker nodes"
+  type        = number
+  default     = 1
+}
+
+variable "desired_nodes" {
+  description = "Desired number of worker nodes"
+  type        = number
+  default     = 2
+}
+
+variable "max_nodes" {
+  description = "Maximum number of worker nodes"
+  type        = number
+  default     = 3
+}
