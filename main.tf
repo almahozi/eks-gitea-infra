@@ -25,3 +25,9 @@ module "eks" {
   public_subnet_ids  = module.vpc.public_subnet_ids
   tags               = local.tags
 }
+
+module "ecr" {
+  source          = "./modules/ecr"
+  repository_name = var.repository_name
+  tags            = local.tags
+}
