@@ -45,3 +45,9 @@ variable "max_nodes" {
   type        = number
   default     = 3
 }
+
+variable "repository_name" {
+  description = "Name of the ECR repository"
+  type        = string
+  default     = "eks-gitea"
+}
