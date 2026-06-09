@@ -17,3 +17,8 @@ output "oidc_provider_arn" {
   description = "ARN of the OIDC provider for IRSA"
   value       = aws_iam_openid_connect_provider.main.arn
 }
+
+output "cluster_security_group_id" {
+  description = "Security group ID of the EKS cluster"
+  value       = aws_eks_cluster.main.vpc_config[0].cluster_security_group_id
+}
