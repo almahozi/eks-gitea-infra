@@ -51,3 +51,9 @@ variable "repository_name" {
   type        = string
   default     = "eks-gitea"
 }
+
+variable "github_repo" {
+  description = "GitHub repository allowed to assume the GitHub Actions role"
+  type        = string
+  default     = "almahozi/eks-gitea-app"
+}
