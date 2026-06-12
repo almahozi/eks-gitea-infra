@@ -85,3 +85,49 @@ resource "aws_iam_role_policy_attachment" "github_actions_ecr" {
   role       = aws_iam_role.github_actions.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser"
 }
+
+# IAM Policy for SSM access
+resource "aws_iam_policy" "gitea_ssm" {
+  name = "eks-gitea-ssm-policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "ssm:GetParameter",
+        "ssm:GetParameters"
+      ]
+      Resource = "arn:aws:ssm:eu-central-1:406708888206:parameter/eks-gitea/*"
+    }]
+  })
+}
+
+# IAM Role for Gitea pods (IRSA)
+resource "aws_iam_role" "gitea" {
+  name = "eks-gitea-pod-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Federated = module.eks.oidc_provider_arn
+      }
+      Action = "sts:AssumeRoleWithWebIdentity"
+      Condition = {
+        StringEquals = {
+          "${replace(module.eks.oidc_provider_arn, "/^(.*provider/)/", "")}:sub" = "system:serviceaccount:default:gitea"
+          "${replace(module.eks.oidc_provider_arn, "/^(.*provider/)/", "")}:aud" = "sts.amazonaws.com"
+        }
+      }
+    }]
+  })
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "gitea_ssm" {
+  role       = aws_iam_role.gitea.name
+  policy_arn = aws_iam_policy.gitea_ssm.arn
+}
