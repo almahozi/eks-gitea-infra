@@ -32,6 +32,19 @@ module "ecr" {
   tags            = local.tags
 }
 
+module "rds" {
+  source                    = "./modules/rds"
+  vpc_id                    = module.vpc.vpc_id
+  private_subnet_ids        = module.vpc.private_subnet_ids
+  cluster_name              = var.cluster_name
+  cluster_security_group_id = module.eks.cluster_security_group_id
+  db_instance_class         = var.db_instance_class
+  db_name                   = var.db_name
+  db_username               = var.db_username
+  db_password               = var.db_password
+  tags                      = local.tags
+}
+
 # GitHub Actions OIDC Provider
 resource "aws_iam_openid_connect_provider" "github" {
   url             = "https://token.actions.githubusercontent.com"
