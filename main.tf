@@ -131,3 +131,38 @@ resource "aws_iam_role_policy_attachment" "gitea_ssm" {
   role       = aws_iam_role.gitea.name
   policy_arn = aws_iam_policy.gitea_ssm.arn
 }
+
+# ALB Controller IAM Policy
+resource "aws_iam_policy" "alb_controller" {
+  name   = "eks-gitea-alb-controller-policy"
+  policy = file("${path.module}/policies/alb-controller-policy.json")
+}
+
+# ALB Controller IAM Role (IRSA)
+resource "aws_iam_role" "alb_controller" {
+  name = "eks-gitea-alb-controller"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Principal = {
+        Federated = module.eks.oidc_provider_arn
+      }
+      Action = "sts:AssumeRoleWithWebIdentity"
+      Condition = {
+        StringEquals = {
+          "${replace(module.eks.oidc_provider_arn, "/^(.*provider/)/", "")}:sub" = "system:serviceaccount:kube-system:aws-load-balancer-controller"
+          "${replace(module.eks.oidc_provider_arn, "/^(.*provider/)/", "")}:aud" = "sts.amazonaws.com"
+        }
+      }
+    }]
+  })
+
+  tags = local.tags
+}
+
+resource "aws_iam_role_policy_attachment" "alb_controller" {
+  role       = aws_iam_role.alb_controller.name
+  policy_arn = aws_iam_policy.alb_controller.arn
+}
