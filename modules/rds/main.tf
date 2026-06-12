@@ -24,18 +24,19 @@ resource "aws_db_subnet_group" "main" {
 }
 
 resource "aws_db_instance" "main" {
-  identifier        = "${var.cluster_name}-rds"
-  instance_class = var.db_instance_class
-  engine = "mysql"
-  engine_version = "8.0"
-  db_name = var.db_name
-  username = var.db_username
-  password_wo = var.db_password
+  identifier          = "${var.cluster_name}-rds"
+  instance_class      = var.db_instance_class
+  engine              = "mysql"
+  engine_version      = "8.0"
+  db_name             = var.db_name
+  username            = var.db_username
+  password_wo         = var.db_password
+  password_wo_version = 1
 
   allocated_storage = 20
 
   db_subnet_group_name   = aws_db_subnet_group.main.name
-  vpc_security_group_ids = [aws_security_group.rds.id]
+  vpc_security_group_ids = [aws_security_group.main.id]
 
   skip_final_snapshot = true
   multi_az            = false
