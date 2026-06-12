@@ -57,3 +57,27 @@ variable "github_repo" {
   type        = string
   default     = "almahozi/eks-gitea-app"
 }
+
+variable "db_password" {
+  description = "Master password for the RDS instance"
+  type        = string
+  sensitive   = true
+}
+
+variable "db_name" {
+  description = "Name of the Gitea database"
+  type        = string
+  default     = "gitea"
+}
+
+variable "db_username" {
+  description = "Master username for the database"
+  type        = string
+  default     = "gitea"
+}
+
+variable "db_instance_class" {
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t3.micro"
+}
