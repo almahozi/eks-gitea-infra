@@ -20,12 +20,12 @@ cluster with full CI/CD, Helm-based deployments, and observability.
 - EKS cluster with managed node group (t3.small × 2)
 - OIDC provider configured for IRSA
 
-### 🔄 Stage 2 — Container Image & ECR
+### ✅ Stage 2 — Container Image & ECR
 - ECR repository provisioned via Terraform
 - Custom Dockerfile wrapping official Gitea image
 - GitHub Actions pipeline to build and push image to ECR
 
-### 🔄 Stage 3 — Helm Deployment & ALB
+### ✅ Stage 3 — Helm Deployment & ALB
 - Helm chart for Gitea deployment
 - RDS MySQL backend
 - Secrets injected via AWS Parameter Store and IRSA
