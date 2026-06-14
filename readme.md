@@ -31,12 +31,17 @@ cluster with full CI/CD, Helm-based deployments, and observability.
 - Secrets injected via AWS Parameter Store and IRSA
 - App exposed publicly via AWS Load Balancer Controller
 
-### 🔄 Stage 4 — CI/CD Pipeline
+### ✅ Stage 4 — CI/CD Pipeline
 - Full GitHub Actions pipeline on push to main
 - Image vulnerability scanning with Trivy
 - Automated Helm upgrade on EKS
 
-### 🔄 Stage 5 — Observability
+### ✅ Stage 5 — Observability
 - Prometheus and Grafana via kube-prometheus-stack
 - Custom Grafana dashboard for cluster and app metrics
 - AlertManager rules for critical alerts
+
+### 🔄 Stage 6 — Load Testing & Auto-scaling Simulation
+- Install Metrics Server for cluster resource metrics
+- Configure Horizontal Pod Autoscaler (HPA) for Gitea deployment
+- Load test simulation with k6 to validate auto-scaling and observability
