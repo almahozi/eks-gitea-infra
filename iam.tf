@@ -119,3 +119,46 @@ resource "aws_iam_role_policy_attachment" "alb_controller" {
   role       = aws_iam_role.alb_controller.name
   policy_arn = aws_iam_policy.alb_controller.arn
 }
+
+# SSM read policy for deploy pipeline
+resource "aws_iam_policy" "github_actions_ssm" {
+  name = "eks-gitea-github-actions-ssm-policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "ssm:GetParameter",
+        "ssm:GetParameters"
+      ]
+      Resource = "arn:aws:ssm:eu-central-1:406708888206:parameter/eks-gitea/*"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_ssm" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = aws_iam_policy.github_actions_ssm.arn
+}
+
+# Github Actions IAM Policy for EKS access
+resource "aws_iam_policy" "github_actions_eks" {
+  name = "eks-gitea-github-actions-eks-policy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect = "Allow"
+      Action = [
+        "eks:DescribeCluster"
+      ]
+      Resource = "arn:aws:eks:eu-central-1:406708888206:cluster/eks-gitea"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "github_actions_eks" {
+  role       = aws_iam_role.github_actions.name
+  policy_arn = aws_iam_policy.github_actions_eks.arn
+}
