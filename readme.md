@@ -1,12 +1,12 @@
-# eks-gitea-infra
+# Gitea Deployment Project
 
-Infrastructure as Code for deploying Gitea on Amazon EKS using Terraform.
-Gitea is a self-hosted Git service deployed on a production-grade Kubernetes 
-cluster with full CI/CD, Helm-based deployments, and observability.
+A practice project for deploying [Gitea](https://gitea.com) on Amazon EKS using Terraform — 
+a self-hosted Git service running on a production-grade Kubernetes cluster with 
+automated CI/CD, Helm-based deployments, observability, and auto-scaling.
 
 ## Architecture
 
-- **Cloud:** AWS (eu-central-1)
+- **Cloud:** AWS
 - **Orchestration:** EKS (Kubernetes 1.35)
 - **IaC:** Terraform 1.15 with S3 remote state
 - **CI/CD:** GitHub Actions with OIDC authentication
@@ -38,7 +38,6 @@ cluster with full CI/CD, Helm-based deployments, and observability.
 
 ### ✅ Stage 5 — Observability
 - Prometheus and Grafana via kube-prometheus-stack
-- Custom Grafana dashboard for cluster and app metrics
 - AlertManager rules for critical alerts
 
 ### ✅ Stage 6 — Load Testing & Auto-scaling Simulation
