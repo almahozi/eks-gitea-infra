@@ -1,6 +1,6 @@
 # Gitea Deployment Project
 
-A practice project for deploying [Gitea](https://gitea.com) on Amazon EKS using Terraform — 
+A practice project for deploying [Gitea](https://gitea.com) on Amazon EKS using Terraform to deliver 
 a self-hosted Git service running on a production-grade Kubernetes cluster with 
 automated CI/CD, Helm-based deployments, observability, and auto-scaling.
 
@@ -11,6 +11,11 @@ automated CI/CD, Helm-based deployments, observability, and auto-scaling.
 - **IaC:** Terraform 1.15 with S3 remote state
 - **CI/CD:** GitHub Actions with OIDC authentication
 - **App:** Gitea with RDS MySQL backend
+
+## Repositories
+
+- **Infra:** This repository
+- **App:** [App repo](https://github.com/almahozi/eks-gitea-app)
 
 ## Stages
 
