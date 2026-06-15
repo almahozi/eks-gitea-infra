@@ -41,7 +41,13 @@ cluster with full CI/CD, Helm-based deployments, and observability.
 - Custom Grafana dashboard for cluster and app metrics
 - AlertManager rules for critical alerts
 
-### 🔄 Stage 6 — Load Testing & Auto-scaling Simulation
+### ✅ Stage 6 — Load Testing & Auto-scaling Simulation
 - Install Metrics Server for cluster resource metrics
 - Configure Horizontal Pod Autoscaler (HPA) for Gitea deployment
 - Load test simulation with k6 to validate auto-scaling and observability
+
+## Auto-scaling Demo
+
+The following Grafana capture demonstrates Gitea's HPA auto-scaling under load. CPU usage was simulated using k6 with 200 virtual users hitting multiple endpoints simultaneously.
+
+![Auto-scaling demo](assets/scaling-demo.gif)
